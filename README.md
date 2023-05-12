@@ -10,13 +10,16 @@
 
 ### 브랜치 구조
 
-- `main` : 배포 branch
-- `dev` : 개발 branch
-  - `fe` : 프론트엔드 branch
-    - `{issue-no}-feature1`
-    - `{issue-no}-feature2`
-  - `be` : 백엔드 branch
-  - `ios` : iOS branch
+```
+main: 배포 branch
+ └─ dev: 개발 branch
+     ├─ fe: FE branch
+     │  └─ {issue-no}-feature
+     ├─ be: BE branch
+     │  └─ {issue-no}-feature
+     └─ ios: iOS branch
+        └─ {issue-no}-feature
+```
 
 ### 그라운드룰
 
