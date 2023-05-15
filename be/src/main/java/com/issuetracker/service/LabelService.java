@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class LabelService {
     private final LabelRepository labelRepository;
 
-    public Optional<Label> createLabel(Label label) {
+    public Optional<Label> createLabel(Label label) throws SQLException {
         return Optional.ofNullable(labelRepository.save(label));
     }
 

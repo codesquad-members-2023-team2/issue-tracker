@@ -5,6 +5,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +14,20 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@AllArgsConstructor
 @ToString
 @Table("labelList")
 public class Label {
 
     public Label(String labelName, String backgroundColor, String fontColor, String description) {
+        this.labelName = labelName;
+        this.backgroundColor = backgroundColor;
+        this.fontColor = fontColor;
+        this.description = description;
+    }
+
+    public Label(Integer labelId, String labelName, String backgroundColor, String fontColor, String description) {
+        this.labelId = labelId;
         this.labelName = labelName;
         this.backgroundColor = backgroundColor;
         this.fontColor = fontColor;
