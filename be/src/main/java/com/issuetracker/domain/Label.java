@@ -13,10 +13,17 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @ToString
 @Table("labelList")
 public class Label {
+
+    public Label(String labelName, String backgroundColor, String fontColor, String description) {
+        this.labelName = labelName;
+        this.backgroundColor = backgroundColor;
+        this.fontColor = fontColor;
+        this.description = description;
+    }
+
     @Id
     @Column("label_id")
     private Integer labelId;
