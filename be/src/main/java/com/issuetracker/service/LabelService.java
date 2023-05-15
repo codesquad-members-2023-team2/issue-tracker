@@ -32,7 +32,10 @@ public class LabelService {
      * @param labelId
      */
     public void deleteLabelById(int labelId) {
-        labelRepository.deleteById(labelId);
+        Label label = labelRepository.findById(labelId).orElseThrow(()->new IllegalArgumentException("없는 라벨입니다."));
+        label.setDeleted(true);
+
+        labelRepository.save(label);
     }
 
     public void updateLabel(Label label) {

@@ -57,7 +57,7 @@ public class IssueListController {
     @GetMapping("api/labels")
     public void labelList() {
         //labelService.createLabel(new Label(null, "포로", "붉은 색", "푸른 색", "설명", false));
-        //labelService.deleteLabelById(1);
+        labelService.deleteLabelById(3);
         //labelService.updateLabel(new Label(2, "루크", "붉은 색", "푸른 색", "설명", false));
         System.out.println(labelService.findAllLabels());
     }
