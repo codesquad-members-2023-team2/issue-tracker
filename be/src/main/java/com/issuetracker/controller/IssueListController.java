@@ -20,6 +20,7 @@ import com.issuetracker.dto.IssueLabelDto;
 import com.issuetracker.dto.IssueListDto;
 import com.issuetracker.dto.FilterMilestoneDto;
 import com.issuetracker.dto.FilterUserDto;
+import com.issuetracker.dto.label.LabelListDto;
 import com.issuetracker.repository.LabelRepository;
 import com.issuetracker.service.LabelService;
 
@@ -55,10 +56,10 @@ public class IssueListController {
     }
 
     @GetMapping("api/labels")
-    public void labelList() {
+    public LabelListDto labelList() {
         //labelService.createLabel(new Label(null, "포로", "붉은 색", "푸른 색", "설명", false));
-        labelService.deleteLabelById(3);
+        //labelService.deleteLabelById(3);
         //labelService.updateLabel(new Label(2, "루크", "붉은 색", "푸른 색", "설명", false));
-        System.out.println(labelService.findAllLabels());
+        return labelService.findAllLabels();
     }
 }

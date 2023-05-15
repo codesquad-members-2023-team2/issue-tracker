@@ -27,5 +27,5 @@ public class Label {
     @Column("font_color")
     private String fontColor;
     private String description;
-    private boolean deleted;
+    private Boolean deleted;
 }
