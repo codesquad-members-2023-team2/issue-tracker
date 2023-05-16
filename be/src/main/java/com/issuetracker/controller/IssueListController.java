@@ -60,41 +60,5 @@ public class IssueListController {
         return new ResponseEntity<IssueListDto>(issueListDto, headers, HttpStatus.OK);
     }
 
-    @GetMapping("/api/labels")
-    public LabelListDto labelList() throws SQLException {
-        //labelService.createLabel(new Label(null, "포로", "붉은 색", "푸른 색", "설명", false));
-        //labelService.deleteLabelById(3);
-        //labelService.updateLabel(new Label(2, "루크", "붉은 색", "푸른 색", "설명", false));
-        return labelService.findAllLabels();
-    }
 
-    /**
-     * 라벨 등록 기능
-     * 예외처리 필요
-     * @param labelName
-     * @param backgroundColor
-     * @param fontColor
-     * @param description
-     */
-    @PostMapping("/api/labels")
-    public void post(@RequestBody LabelVo labelVo) throws SQLException {
-        labelService.createLabel(new Label(labelVo.getLabelName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
-                labelVo.getDescription()));
-    }
-
-    @DeleteMapping("/api/labels/{labelId}")
-    public void delete(@PathVariable int labelId) {
-        labelService.deleteLabelById(labelId);
-    }
-
-    @PatchMapping("/api/labels/{labelId}")
-    public void update(@PathVariable int labelId, @RequestBody LabelVo labelVo) {
-        labelService.updateLabel(new Label(labelId, labelVo.getLabelName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
-                labelVo.getDescription()));
-    }
-
-    @ExceptionHandler(SQLException.class)
-    public void sqlException() {
-        System.out.println("SQL 예외 발생(예외처리 수정 예정)");
-    }
 }

@@ -1,44 +1,36 @@
 package com.issuetracker.domain;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Table("label")
 public class Label {
 
-    public Label(String labelName, String backgroundColor, String fontColor, String description) {
-        this.labelName = labelName;
+    public Label(String name, String backgroundColor, String fontColor, String description) {
+        this.name = name;
         this.backgroundColor = backgroundColor;
         this.fontColor = fontColor;
         this.description = description;
     }
 
-    public Label(Integer labelId, String labelName, String backgroundColor, String fontColor, String description) {
-        this.labelId = labelId;
-        this.labelName = labelName;
+    public Label(Integer id, String name, String backgroundColor, String fontColor, String description) {
+        this.id = id;
+        this.name = name;
         this.backgroundColor = backgroundColor;
         this.fontColor = fontColor;
         this.description = description;
     }
 
     @Id
-    @Column("id")
-    private Integer labelId;
-    @Column("name")
-    private String labelName;
+    private Integer id;
+    private String name;
     @Column("background_color")
     private String backgroundColor;
     @Column("font_color")
