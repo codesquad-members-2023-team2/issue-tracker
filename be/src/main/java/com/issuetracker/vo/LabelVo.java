@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class LabelVo {
-    private String labelName;
+    private String name;
     private String backgroundColor;
     private String fontColor;
     private String description;

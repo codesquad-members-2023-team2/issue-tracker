@@ -38,8 +38,8 @@ public class LabelController {
      */
     @PostMapping("/api/labels")
     public void post(@RequestBody LabelVo labelVo) throws SQLException {
-        labelService.createLabel(new Label(labelVo.getLabelName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
-                labelVo.getDescription()));
+        labelService.createLabel(new Label(null, labelVo.getName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
+                labelVo.getDescription(), false));
     }
 
     @DeleteMapping("/api/labels/{labelId}")
@@ -49,7 +49,7 @@ public class LabelController {
 
     @PatchMapping("/api/labels/{labelId}")
     public void update(@PathVariable int labelId, @RequestBody LabelVo labelVo) {
-        labelService.updateLabel(new Label(labelId, labelVo.getLabelName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
+        labelService.updateLabel(new Label(labelId, labelVo.getName(), labelVo.getBackgroundColor(), labelVo.getFontColor(),
                 labelVo.getDescription()));
     }
 

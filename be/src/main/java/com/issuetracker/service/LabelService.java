@@ -25,8 +25,7 @@ public class LabelService {
     private final LabelRepository labelRepository;
 
     public Label createLabel(Label label) throws SQLException {
-        return labelRepository.createLabel(label.getName(), label.getBackgroundColor(), label.getFontColor(),
-                label.getDescription());
+        return labelRepository.save(label);
     }
 
     public Optional<Label> findLabelById(int labelId) {
