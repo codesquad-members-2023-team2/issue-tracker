@@ -16,7 +16,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-@Table("labelList")
+@Table("label")
 public class Label {
 
     public Label(String labelName, String backgroundColor, String fontColor, String description) {
@@ -35,9 +35,9 @@ public class Label {
     }
 
     @Id
-    @Column("label_id")
+    @Column("id")
     private Integer labelId;
-    @Column("label_name")
+    @Column("name")
     private String labelName;
     @Column("background_color")
     private String backgroundColor;

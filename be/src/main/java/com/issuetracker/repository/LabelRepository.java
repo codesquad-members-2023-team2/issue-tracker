@@ -12,9 +12,13 @@ import com.issuetracker.mapper.LabelMapper;
 
 public interface LabelRepository extends CrudRepository<Label, Integer> {
 
-    @Query(value = "SELECT label_id, label_name, background_color, font_color, description, deleted FROM labelList WHERE deleted = 0")
+    @Query(value = "SELECT id, name, background_color, font_color, description, deleted FROM label WHERE deleted = 0")
     List<Label> findAllLabels();
 
-    @Query("UPDATE labelList SET deleted = 1 WHERE label_id = :labelId")
-    Label deleteByLabelId(@Param("labelId") Integer labelId);
+    @Query("UPDATE label SET deleted = 1 WHERE id = :id")
+    Label deleteByid(@Param("id") Integer id);
+
+    @Query("INSERT INTO label (name, background_color, font_color, description) VALUES (:name, :backgroundColor, :fontColor, :description)")
+    Label createLabel(@Param("name") String name, @Param("backgroundColor") String backgroundColor,
+            @Param("fontColor") String fontColor, @Param("description") String description);
 }

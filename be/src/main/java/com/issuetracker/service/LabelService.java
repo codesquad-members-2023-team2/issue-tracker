@@ -24,8 +24,9 @@ import lombok.RequiredArgsConstructor;
 public class LabelService {
     private final LabelRepository labelRepository;
 
-    public Optional<Label> createLabel(Label label) throws SQLException {
-        return Optional.ofNullable(labelRepository.save(label));
+    public Label createLabel(Label label) throws SQLException {
+        return labelRepository.createLabel(label.getLabelName(), label.getBackgroundColor(), label.getFontColor(),
+                label.getDescription());
     }
 
     public Optional<Label> findLabelById(int labelId) {
@@ -34,6 +35,7 @@ public class LabelService {
 
     public LabelListDto findAllLabels() throws SQLException {
         List<Label> labelList = labelRepository.findAllLabels();
+        System.out.println(labelList);
 
         List<LabelDto> labelDtoList = new ArrayList<>();
         for (Label label : labelList) {
