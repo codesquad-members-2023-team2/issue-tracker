@@ -3,7 +3,8 @@ import React from 'react';
 import Issue from './Issue';
 import Button from '@common/Button';
 
-import { DropdownItems } from '../../pages/MainPage';
+import { ElapseTime } from '@utils/getTimeElapsed';
+import { MainDropdowns } from '../../pages/MainPage';
 import FilterList from '@components/FilterList/FilterList';
 
 export interface LabelRow {
@@ -13,13 +14,6 @@ export interface LabelRow {
   fontColor: string;
 }
 
-export interface elapseTime {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-}
-
 export interface IssueRow {
   issueId: number;
   title: string;
@@ -27,7 +21,7 @@ export interface IssueRow {
   userName: string;
   profileUrl: string;
   isOpen: boolean;
-  elapseTime: elapseTime;
+  elapseTime: ElapseTime;
   milestoneName?: string;
   labelList: LabelRow[];
 }
@@ -52,10 +46,10 @@ interface Props {
   milestones: MilestoneRow[];
   countOpenedIssues: number;
   countClosedIssues: number;
-  isDropdownOpen: DropdownItems;
+  isDropdownOpen: MainDropdowns;
   status: boolean;
   onIssueTitleClick: () => void;
-  onDropdownTitleClick: (title: keyof DropdownItems) => void;
+  onDropdownTitleClick: (title: keyof MainDropdowns) => void;
   onStatusTabClick: (status: boolean) => void;
 }
 
@@ -124,6 +118,7 @@ const IssueList: React.FC<Props> = ({
                       id: user.userId,
                       title: user.userName,
                       imgUrl: user.profileUrl,
+                      isChecked: false,
                     };
                   })}
                   isNullAvailability={true}

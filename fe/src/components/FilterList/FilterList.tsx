@@ -37,11 +37,11 @@ const FilterList: React.FC<Props> = ({
           <button className={filterItemStyle} onClick={onClick}>
             <span>{title} 없는 이슈</span>
             {/* TODO(Lily): item이 선택되면 checkOnCircle로 바꾸기 */}
-            {canSelectMultipleItems && <CheckOffCircle />}
+            {<CheckOffCircle />}
           </button>
         )}
         {items.map(item => {
-          const { id, title, imgUrl, backgroundColor } = item;
+          const { id, title, imgUrl, backgroundColor, isChecked } = item;
           return (
             <button key={id} className={filterItemStyle} onClick={onClick}>
               <FilterItem
@@ -53,7 +53,7 @@ const FilterList: React.FC<Props> = ({
                 backgroundColor={backgroundColor}
               />
               {/* TODO(Lily): item이 선택되면 checkOnCircle로 바꾸기 */}
-              {canSelectMultipleItems && <CheckOffCircle />}
+              {isChecked ? <CheckOnCircle /> : <CheckOffCircle />}
             </button>
           );
         })}

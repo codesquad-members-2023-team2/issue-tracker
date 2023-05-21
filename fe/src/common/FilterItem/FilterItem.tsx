@@ -10,6 +10,7 @@ export interface FilterItemRaw {
   backgroundColor?: string;
   width?: number;
   height?: number;
+  isChecked?: boolean;
 }
 
 const FilterItem: React.FC<FilterItemRaw> = ({

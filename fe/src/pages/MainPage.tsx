@@ -4,13 +4,14 @@ import Header from '@components/Header/Header';
 import FilterBar from '@components/FilterBar/FilterBar';
 import NavLinks from '@components/NavLinks/NavLinks';
 import Button from '@common/Button';
-import IssueList, {
-  IssueRow,
-  elapseTime,
-} from '@components/IssueList/IssueList';
+import IssueList, { IssueRow } from '@components/IssueList/IssueList';
 import FilterList from '@components/FilterList/FilterList';
 
-export type DropdownItems = {
+import { getTimeElapsed } from '@utils/getTimeElapsed';
+
+import { FILTER_DROPDOWN_LIST, API_URL } from '@constants/MainPage';
+
+export type MainDropdowns = {
   filter: boolean;
   assignee: boolean;
   label: boolean;
@@ -18,35 +19,12 @@ export type DropdownItems = {
   writer: boolean;
 };
 
-const issueDropdownList = [
-  {
-    id: 0,
-    title: '열린 이슈',
-  },
-  {
-    id: 1,
-    title: '내가 작성한 이슈',
-  },
-  {
-    id: 2,
-    title: '나에게 할당된 이슈',
-  },
-  {
-    id: 3,
-    title: '내가 댓글을 남긴 이슈',
-  },
-  {
-    id: 4,
-    title: '닫힌 이슈',
-  },
-];
-
 const MainPage = () => {
   // TODO: 올바른 타입 명시
   const [data, setData] = useState({} as any);
   const [issueItems, setIssueItems] = useState<IssueRow[]>([]);
   const [isOpenIssues, setIsOpenIssues] = useState(true);
-  const [isDropdownOpen, setIsDropdownOpen] = useState<DropdownItems>({
+  const [isDropdownOpen, setIsDropdownOpen] = useState<MainDropdowns>({
     filter: false,
     assignee: false,
     label: false,
@@ -76,25 +54,6 @@ const MainPage = () => {
     [issueItems]
   );
 
-  const getTimeElapsed = (startTime: string): elapseTime => {
-    const start = new Date(startTime);
-    const now = new Date();
-
-    const elapsedTime = now.getTime() - start.getTime();
-    const elapsedSeconds = Math.floor(elapsedTime / 1000);
-    const days = Math.floor(elapsedSeconds / 86400);
-    const hours = Math.floor((elapsedSeconds % 86400) / 3600);
-    const minutes = Math.floor(((elapsedSeconds % 86400) % 3600) / 60);
-    const seconds = elapsedSeconds % 60;
-
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-    };
-  };
-
   const mapIssues = (data: any) => {
     const issueItem: IssueRow[] = data.issues
       .filter((issue: any) => issue.isOpen === isOpenIssues)
@@ -114,7 +73,7 @@ const MainPage = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch('http://43.200.199.205:8080/api/');
+      const res = await fetch(API_URL);
       // const res = await fetch('/issues');
       const data = await res.json();
 
@@ -140,7 +99,7 @@ const MainPage = () => {
         {isDropdownOpen.filter && (
           <FilterList
             title="이슈"
-            items={issueDropdownList}
+            items={FILTER_DROPDOWN_LIST}
             isNullAvailability={false}
             onClick={() => {
               console.log('test');
