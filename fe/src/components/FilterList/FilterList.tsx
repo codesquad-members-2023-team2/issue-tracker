@@ -1,65 +1,86 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import FilterItem, { FilterItemRaw } from '@common/FilterItem/FilterItem';
-// import checkOffCircle from '@assets/checkOffCircle.svg';
-import { ReactComponent as CheckOffCircle } from '@assets/checkOffCircle.svg';
-import { ReactComponent as CheckOnCircle } from '@assets/checkOnCircle.svg';
+import { FilterOptions } from '@components/IssueTable/IssueTable';
+import useOutsideClick from './useOutsideClick';
+
+export const filterOptions: Record<keyof FilterOptions, string | string[]> = {
+  page: '페이지',
+  status: '상태',
+  issue: ['열린이슈', '닫힌이슈'],
+  filter: '이슈',
+  assignee: '담당자',
+  label: '레이블',
+  milestone: '마일스톤',
+  writer: '작성자',
+};
 
 interface Props {
-  title: string;
+  title: keyof FilterOptions;
   items: FilterItemRaw[];
-  isNullAvailability?: boolean;
-  canSelectMultipleItems?: boolean;
-  onClick: () => void;
+  isOpen: boolean;
+  setOpenedFilterList: (filter: string) => void;
+  onItemClick: (type: keyof FilterOptions, id: number) => void;
 }
 
 const FilterList: React.FC<Props> = ({
   title,
   items,
-  isNullAvailability = true,
-  canSelectMultipleItems = true,
-  onClick,
+  isOpen,
+  setOpenedFilterList,
+  onItemClick,
 }) => {
-  const filterItemStyle =
-    'flex w-full justify-between items-center border-t px-4 py-2 text-gray-700';
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  return (
+  const onItemClickHandler = (id: number) => {
+    onItemClick(title, id);
+  };
+
+  const getOption = () => {
+    if (title) {
+      return filterOptions[title];
+    }
+
+    // NOTE(Lily): 예상하지 못한 title이 주어졌을 때 오류 처리
+    throw new Error('Invalid title');
+  };
+
+  const handleOutsideClick = (event?: MouseEvent) => {
+    if (event) {
+      // 클릭된 영역이 FilterList 내부의 요소이면 아무 동작하지 않음
+      if (ref.current && ref.current.contains(event.target as Node)) {
+        return;
+      }
+    }
+
+    // 클릭된 영역이 FilterList 외부의 요소이면 FilterList를 닫음
+    setOpenedFilterList('');
+  };
+
+  useOutsideClick(ref, handleOutsideClick);
+
+  return isOpen ? (
     <div
-      className={`absolute top-12 z-10 flex w-60 flex-col items-center rounded-lg border ${
-        title !== '이슈' && 'right-0'
-      }`}
+      ref={ref}
+      className={`absolute ${
+        title !== 'filter' && 'right-0'
+      } top-12 z-10 flex w-60 flex-col items-center rounded-lg border`}
     >
       <div className="w-full rounded-t-lg bg-gray-100 py-2 pl-4 text-left text-sm">
-        {title} 필터
+        {getOption()} 필터
       </div>
       <div className="w-full rounded-b-lg bg-white">
-        {isNullAvailability && (
-          <button className={filterItemStyle} onClick={onClick}>
-            <span>{title} 없는 이슈</span>
-            {/* TODO(Lily): item이 선택되면 checkOnCircle로 바꾸기 */}
-            {canSelectMultipleItems && <CheckOffCircle />}
-          </button>
-        )}
-        {items.map(item => {
-          const { id, title, imgUrl, backgroundColor } = item;
-          return (
-            <button key={id} className={filterItemStyle} onClick={onClick}>
-              <FilterItem
-                id={id}
-                title={title}
-                imgUrl={imgUrl}
-                width={20}
-                height={20}
-                backgroundColor={backgroundColor}
-              />
-              {/* TODO(Lily): item이 선택되면 checkOnCircle로 바꾸기 */}
-              {canSelectMultipleItems && <CheckOffCircle />}
-            </button>
-          );
-        })}
+        {/* TODO(Lily): 담당자, 레이블, 마일스톤 없는 이슈 추가 */}
+        {items.map(item => (
+          <FilterItem
+            key={item.id}
+            item={item}
+            onItemClick={onItemClickHandler}
+          />
+        ))}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default FilterList;

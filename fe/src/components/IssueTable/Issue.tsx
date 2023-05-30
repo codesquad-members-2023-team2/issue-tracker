@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Profile from '@common/Profile';
 import Label from '@common/Label';
-import { LabelRow, elapseTime } from './IssueList';
+import { LabelRow } from './IssueTable';
+import { ElapseTime } from '@utils/getTimeElapsed';
 import { ReactComponent as AlertCircle } from '@assets/alertCircle.svg';
 import { ReactComponent as Archive } from '@assets/archive.svg';
 import { ReactComponent as Milestone } from '@assets/milestone.svg';
@@ -14,8 +16,10 @@ interface Props {
   profileUrl: string;
   isOpen: boolean;
   labelList: LabelRow[];
-  elapseTime: elapseTime;
+  elapseTime: ElapseTime;
   milestoneName?: string;
+  isChecked: boolean;
+  onIssueChecked: (id: number) => void;
   onIssueTitleClick: (id: number) => void;
 }
 
@@ -28,6 +32,8 @@ const Issue: React.FC<Props> = ({
   elapseTime,
   milestoneName,
   labelList,
+  isChecked,
+  onIssueChecked,
   onIssueTitleClick,
 }) => {
   const { days, hours, minutes } = elapseTime;
@@ -41,11 +47,11 @@ const Issue: React.FC<Props> = ({
 
   return (
     <div className="flex border-t px-8 py-4">
-      <div className="mr-8 mt-2">
+      <div className="mr-8 mt-1">
         <input
           type="checkbox"
-          checked={false}
-          onChange={() => console.log('check')}
+          checked={isChecked}
+          onChange={() => onIssueChecked(issueId)}
         />
       </div>
       <div>
@@ -55,13 +61,13 @@ const Issue: React.FC<Props> = ({
           ) : (
             <Archive stroke="#4E4B66" />
           )}
-          {/* TODO(Lily): 라우터 설치 및 설정 이후에 Link 태그로 바꾸기 */}
-          <button
+          <Link
+            to={`issues/${issueId}`}
             className="mx-2 text-left text-lg font-bold text-neutral-strong"
-            onClick={() => onIssueTitleClick(issueId)}
+            onChange={() => onIssueTitleClick(issueId)}
           >
             {title}
-          </button>
+          </Link>
           <div className="flex">
             {labelList.map(label => {
               const { labelId, labelName, backgroundColor, fontColor } = label;
@@ -88,7 +94,6 @@ const Issue: React.FC<Props> = ({
           )}
         </div>
       </div>
-      {/* FIXME(Jayden): Profile 태그의 상위 태그의 높이가 고정 */}
       <div className="flex grow items-center justify-end">
         <Profile url={profileUrl} width={20} height={20} />
       </div>
