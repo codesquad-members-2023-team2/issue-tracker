@@ -30,7 +30,7 @@ jobs:
         working-directory: ./fe
         
       - name: delte node_modules folder
-        run: rm -r package-lock.json
+        run: rm -rf package-lock.json
         working-directory: ./fe
         
           
