@@ -24,6 +24,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 18
+      
+      - name: npm clean cache
+        run: npm cache clean --force
+        working-directory: ./fe
+        
+      - name: delte node_modules folder
+        run: rm -r package-lock.json
+        working-directory: ./fe
+        
           
       - name: Install dependencies    # 의존 파일 설치
         run: npm install
