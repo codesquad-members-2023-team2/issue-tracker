@@ -7,8 +7,8 @@ on:
 
 env:
   S3_BUCKET_NAME: issuetracker-web
-  CODE_DEPLOY_APPLICATION_NAME: issue-tracker-react
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: issue-tracker-react
+  CODE_DEPLOY_APPLICATION_NAME: issuetracker-react
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: issuetracker-react
   CI: false
 
 jobs:
