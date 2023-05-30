@@ -35,6 +35,7 @@ jobs:
         
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
+        working-directory: ./fe
         shell: bash
 
       - name: Deploy                  # Upload build file to S3
