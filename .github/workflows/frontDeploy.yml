@@ -9,6 +9,7 @@ env:
   S3_BUCKET_NAME: issuetracker-web
   CODE_DEPLOY_APPLICATION_NAME: issue-tracker-react
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: issue-tracker-react
+  CI: false
 
 jobs:
   deploy:
@@ -27,8 +28,9 @@ jobs:
         working-directory: ./fe
 
       - name: Generate build          # React Build
-        run: npm run build -- --no-lint
+        run: npm run build
         working-directory: ./fe
+
 
       - name: Deploy                  # Upload build file to S3
         env:
