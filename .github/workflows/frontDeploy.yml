@@ -28,6 +28,11 @@ jobs:
       - name: Install dependencies    # 의존 파일 설치
         run: npm install
         working-directory: ./fe
+        
+        
+      - name: npm run start test          # React start
+        run: npm run start
+        working-directory: ./fe
 
       - name: Generate build          # React Build
         run: npm run build
