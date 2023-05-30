@@ -24,9 +24,11 @@ jobs:
 
       - name: Install dependencies    # 의존 파일 설치
         run: npm install
+        working-directory: ./fe
 
       - name: Generate build          # React Build
         run: npm run build
+        working-directory: ./fe
 
       - name: Deploy                  # Upload build file to S3
         env:
