@@ -9,7 +9,7 @@ env:
   S3_BUCKET_NAME: issuetracker-web
   CODE_DEPLOY_APPLICATION_NAME: issue-tracker-react
   CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: issue-tracker-react
-  CI: false
+#  CI: false
 
 jobs:
   deploy:
@@ -20,9 +20,11 @@ jobs:
       - name: Checkout source code.   # Repo checkout
         uses: actions/checkout@v3
 
-      - name: Check Node v            # Node v 확인
-        run: node -v
-
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+          
       - name: Install dependencies    # 의존 파일 설치
         run: npm install
         working-directory: ./fe
