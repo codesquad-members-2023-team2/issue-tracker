@@ -46,7 +46,7 @@ const Issue: React.FC<Props> = ({
       } ${minutes}분 전, ${userName}님에 의해 닫혔습니다.`;
 
   return (
-    <div className="flex border-t px-8 py-4">
+    <div className="flex border-t border-gray-300 px-8 py-4 hover:bg-gray-100">
       <div className="mr-8 mt-1">
         <input
           type="checkbox"
@@ -63,7 +63,7 @@ const Issue: React.FC<Props> = ({
           )}
           <Link
             to={`issues/${issueId}`}
-            className="mx-2 text-left text-lg font-bold text-neutral-strong"
+            className="mx-2 text-left text-lg font-bold text-gray-900"
             onChange={() => onIssueTitleClick(issueId)}
           >
             {title}
@@ -82,7 +82,6 @@ const Issue: React.FC<Props> = ({
             })}
           </div>
         </div>
-        {/* TODO: issue info 세로 가운데 정렬 */}
         <div className="flex">
           <span className="mr-4 text-gray-600">#{issueId}</span>
           <span className="mr-4 text-gray-600">{elapsedMessage}</span>

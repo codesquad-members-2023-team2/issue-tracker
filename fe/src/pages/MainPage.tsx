@@ -10,6 +10,8 @@ import IssueTable, {
 import { BASE_API } from 'src/api';
 import { getTimeElapsed } from '@utils/getTimeElapsed';
 import { ReactComponent as XSquare } from '@assets/xSquare.svg';
+import { useNavigate } from 'react-router-dom';
+import PageNation from '@components/PageNation';
 
 const MainPage = () => {
   const [data, setData] = useState({} as any);
@@ -23,6 +25,8 @@ const MainPage = () => {
   const hasFilters = Boolean(
     checkedIssues.length || Object.keys(filterOptions).length
   );
+  const navigate = useNavigate();
+  if (!localStorage.getItem('token')) navigate('/login');
 
   const mapIssues = (data: any) => {
     const issueItems: IssueRow[] = data.issues
@@ -115,11 +119,6 @@ const MainPage = () => {
           isOpen: Boolean(id),
         }));
 
-        console.log(
-          JSON.stringify({
-            issues: fetchData,
-          })
-        );
         const response = await fetch(`${BASE_API}issues`, {
           method: 'PATCH',
           headers: {
@@ -138,10 +137,13 @@ const MainPage = () => {
     }
   };
 
+  const onNewIssueClick = () => {
+    navigate('/create');
+  };
+
   useEffect(() => {
     fetchFilteredData();
   }, [filterQueryString]);
-
   return (
     <>
       <div className="relative mb-[30px] flex justify-between">
@@ -157,9 +159,7 @@ const MainPage = () => {
           />
           <Button
             title={'이슈 작성'}
-            onClick={() => {
-              console.log('test');
-            }}
+            onClick={onNewIssueClick}
             size={'Small'}
             iconName="plus"
             fontSize="text-xs"
@@ -194,6 +194,12 @@ const MainPage = () => {
           setCheckedIssues={setCheckedIssues}
         />
       ) : null}
+      <PageNation
+        issueCount={
+          isOpenIssues ? data.countOpenedIssues : data.countClosedIssues
+        }
+        onPageClick={setPage}
+      />
     </>
   );
 };

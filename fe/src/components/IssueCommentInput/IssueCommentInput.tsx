@@ -5,11 +5,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
+
 import Button from '@common/Button';
 import { issueDetailDataContext } from '../../pages/IssueDetailPage';
 import { BASE_API } from '../../api';
-import fetchData from '@utils/fetchSetData';
+import fetchSetData from '@utils/fetchSetData';
 import { IssueDetailData } from '@customTypes/IssueDetailPage';
+import { ReactComponent as Grip } from '@assets/grip.svg';
 
 interface IssueCommentInputProps {
   setIssueDetailData: Dispatch<IssueDetailData>;
@@ -21,6 +23,7 @@ const IssueCommentInput = (props: IssueCommentInputProps) => {
   const [showCharCount, setShowCharCount] = useState(true);
   const commentTextAreaRef = useRef<HTMLTextAreaElement>(null);
   const [commentFocused, setCommentFocused] = useState(false);
+  const user = JSON.parse(localStorage.getItem('token') as string);
   function clickOnOutside(ref: any) {
     useEffect(() => {
       function handleClickOutside(e: Event): void {
@@ -63,16 +66,17 @@ const IssueCommentInput = (props: IssueCommentInputProps) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: 3, // TODO(Jayden): 로그인한 유저의 id로 변경
+          userId: user.id, // FIXME(Jayden): 로그인한 유저의 id로 변경
           content: commentContent,
         }),
       });
       if (temp.ok) {
-        fetchData(temp.url, setIssueDetailData);
+        fetchSetData(temp.url, setIssueDetailData);
       }
       setCommentContent('');
     }
   };
+
   return (
     <div className="flex w-full flex-col justify-between gap-y-6">
       <section
@@ -90,16 +94,19 @@ const IssueCommentInput = (props: IssueCommentInputProps) => {
           onFocus={() => setCommentFocused(true)}
           className={`h-4/5 w-full rounded-t-2xl border-none ${
             commentFocused ? 'bg-white' : 'bg-gray-200'
-          } p-4 placeholder-gray-600 outline-0`}
+          } p-4 placeholder-gray-600 outline-0 focus:outline-none`}
           ref={commentTextAreaRef}
+          style={{ resize: 'none' }}
         />
-        <div
-          className={`flex justify-end ${
-            commentFocused ? 'bg-white' : 'bg-gray-200'
-          } h-8`}
-        >
-          {showCharCount && `띄어쓰기 포함 ${commentContent.length}자`}
-        </div>
+        {showCharCount && (
+          <div
+            className={`flex justify-end text-sm text-gray-600 ${
+              commentFocused ? 'bg-white' : 'bg-gray-200'
+            } h-8`}
+          >
+            띄어쓰기 포함 {commentContent.length}자{<Grip />}
+          </div>
+        )}
         <section
           className={`h-1/5 w-full rounded-b-2xl border-t border-dashed border-gray-300 ${
             commentFocused ? 'bg-white' : 'bg-gray-200'

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import FilterItem, { FilterItemRaw } from '@common/FilterItem/FilterItem';
 import { FilterOptions } from '@components/IssueTable/IssueTable';
-import useOutsideClick from './useOutsideClick';
+import useOutsideClick from '@hooks/useOutsideClick';
 
 export const filterOptions: Record<keyof FilterOptions, string | string[]> = {
   page: '페이지',
@@ -40,8 +40,6 @@ const FilterList: React.FC<Props> = ({
     if (title) {
       return filterOptions[title];
     }
-
-    // NOTE(Lily): 예상하지 못한 title이 주어졌을 때 오류 처리
     throw new Error('Invalid title');
   };
 
@@ -52,7 +50,6 @@ const FilterList: React.FC<Props> = ({
         return;
       }
     }
-
     // 클릭된 영역이 FilterList 외부의 요소이면 FilterList를 닫음
     setOpenedFilterList('');
   };
