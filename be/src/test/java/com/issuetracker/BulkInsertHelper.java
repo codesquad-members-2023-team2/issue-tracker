@@ -29,7 +29,7 @@ public class BulkInsertHelper {
             List<Issue> issues = new ArrayList<>();
             for (int i = 0; i < 1000; i++) {
                 issues.add(
-                        new Issue(null, (long)2, 2, getRandomString(), getRandomString(4000), true, LocalDateTime.now(),
+                        new Issue(null, (long)2, 2, getRandomString(), true, LocalDateTime.now(),
                                 null, null));
             }
             issueRepository.saveAll(issues);
