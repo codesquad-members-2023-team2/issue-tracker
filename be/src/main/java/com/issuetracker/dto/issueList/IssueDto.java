@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class IssueDto {
     private long issueId;
     private String title;
-    private String content;
     private String userName;
     private String profileUrl;
     private boolean isOpen;

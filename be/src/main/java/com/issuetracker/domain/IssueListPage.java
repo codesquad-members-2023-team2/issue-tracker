@@ -15,7 +15,6 @@ public class IssueListPage {
     @Column("issueId")
     private Long id;
     private String title;
-    private String content;
     @Column("userName")
     private String userName;
     @Column("profileUrl")

@@ -11,7 +11,7 @@ import com.issuetracker.dto.issueList.IssueDto;
 public class IssueListDtoMapper {
     public static void addIssueDto(Map<Long, IssueDto> issueDtoMap, IssueListPage issueListPage) {
         Set<IssueLabelDto> issueLabelDtoList = new HashSet<>();
-        IssueDto issueDto = new IssueDto(issueListPage.getId(), issueListPage.getTitle(), issueListPage.getContent(),
+        IssueDto issueDto = new IssueDto(issueListPage.getId(), issueListPage.getTitle(),
                 issueListPage.getUserName(),
                 issueListPage.getProfileUrl(), issueListPage.getOpened(), issueListPage.getCreatedAt(),
                 issueListPage.getClosedAt(),

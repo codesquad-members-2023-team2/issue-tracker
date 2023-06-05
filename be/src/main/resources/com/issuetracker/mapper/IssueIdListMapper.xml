@@ -5,7 +5,7 @@
     <select id="findIssueIdList" resultType="java.lang.Long" parameterType="com.issuetracker.dto.issueList.Filter">
         <bind name="pattern" value="'%' + (search != null ? search : '') + '%'" />
         SELECT i.id AS issueId
-        FROM issue i
+        FROM subissue i
         LEFT OUTER JOIN issue_label il ON i.id = il.issue_id
         LEFT OUTER JOIN (SELECT * from label WHERE deleted IS FALSE) l ON l.id = il.label_id
         LEFT OUTER JOIN assignee a ON a.issue_id = i.id

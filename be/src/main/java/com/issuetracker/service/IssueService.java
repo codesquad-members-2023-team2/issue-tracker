@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.issuetracker.domain.Assignee;
 import com.issuetracker.domain.Comment;
 import com.issuetracker.domain.Issue;
+import com.issuetracker.domain.IssueContent;
 import com.issuetracker.domain.IssueLabel;
 import com.issuetracker.domain.Milestone;
 import com.issuetracker.domain.User;
@@ -36,6 +37,7 @@ import com.issuetracker.dto.issueList.IssueStatusListDto;
 import com.issuetracker.mapper.LabelToDtoMapper;
 import com.issuetracker.repository.AssigneeRepository;
 import com.issuetracker.repository.CommentRepository;
+import com.issuetracker.repository.IssueContentRepository;
 import com.issuetracker.repository.IssueLabelRepository;
 import com.issuetracker.repository.IssueRepository;
 import com.issuetracker.repository.LabelRepository;
@@ -56,6 +58,7 @@ public class IssueService {
     private final MilestoneRepository milestoneRepository;
     private final UserRepository userRepository;
     private final LabelRepository labelRepository;
+    private final IssueContentRepository issueContentRepository;
 
     /**
      * 데이터베이스에서 가져온 데이터들로 이슈 상세 조회 시 필요한 데이터들을 조립
@@ -70,7 +73,8 @@ public class IssueService {
             return new IssueDetailPageDto();
         }
         User user = userRepository.findById(issue.getUserId()).get();
-        IssueDetailDto issueDetailDto = new IssueDetailDto(issueId, issue.getTitle(), issue.getContent(),
+        IssueContent issueContent = issueContentRepository.findById(issue.getId()).get();
+        IssueDetailDto issueDetailDto = new IssueDetailDto(issueId, issue.getTitle(), issueContent.getContent(),
                 user.getLoginId(), user.getProfileUrl(), issue.isOpened(), issue.getCreatedAt(), issue.getClosedAt());
 
         List<User> assigneeList = issueRepository.findAssigneeListByIssueId(issueId);

@@ -7,19 +7,20 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import com.issuetracker.dto.issue.IssuePostDto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
-@Table("issue")
+@AllArgsConstructor
+@Table("subissue")
 public class Issue {
     @Id
     private Long id;
     private Long userId;
     private Integer milestoneId;
     private String title;
-    private String content;
     private boolean opened;
     private LocalDateTime createdAt;
     private LocalDateTime closedAt;
@@ -30,7 +31,6 @@ public class Issue {
                 .userId(issuePostDto.getUserId())
                 .milestoneId(issuePostDto.getMilestoneId())
                 .title(issuePostDto.getTitle())
-                .content(issuePostDto.getContent())
                 .opened(true)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -42,7 +42,6 @@ public class Issue {
                 .userId(issueUnmodified.getUserId())
                 .milestoneId(issuePostDto.getMilestoneId())
                 .title(issuePostDto.getTitle())
-                .content(issuePostDto.getContent())
                 .opened(issueUnmodified.isOpened())
                 .createdAt(issueUnmodified.getCreatedAt())
                 .closedAt(issueUnmodified.getClosedAt())
@@ -51,7 +50,7 @@ public class Issue {
     }
 
     public static Issue ofDeleted(Issue issue) {
-        return new Issue(issue.getId(), issue.getUserId(), issue.getMilestoneId(), issue.getTitle(),
-                issue.getContent(), issue.isOpened(), issue.getCreatedAt(), issue.getClosedAt(), LocalDateTime.now());
+        return new Issue(issue.getId(), issue.getUserId(), issue.getMilestoneId(), issue.getTitle(), issue.isOpened(),
+                issue.getCreatedAt(), issue.getClosedAt(), LocalDateTime.now());
     }
 }
